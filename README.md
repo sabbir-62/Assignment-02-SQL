@@ -43,6 +43,8 @@ CREATE TABLE conservation.rangers (
 );
 ```
 
+---
+
 
 ## 3. What is the difference between the VARCHAR and CHAR data types?
 
@@ -71,6 +73,8 @@ CREATE TABLE example_char (
 INSERT INTO example_char VALUES ('Sabbir');
 ```
 3. In `CHAR(5)`, `Sabbir` is stored as 50 characters. 6 Character + 44 trailing spaces.
+
+---
 
 
 ## 4. Explain the purpose of the WHERE clause in a SELECT statement.
@@ -110,6 +114,8 @@ SELECT * FROM rangers;
 // Retrive only name and region column
 SELECT name, region FROM rangers;
 ```
+
+---
 
 
 ## 5. How can you modify data using UPDATE statements?
