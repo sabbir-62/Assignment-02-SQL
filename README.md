@@ -140,3 +140,27 @@ WHERE name = 'Alice Green';
 UPDATE rangers
 SET region = 'Unknown';
 ```
+
+---
+
+## 6. How can you calculate aggregate functions like COUNT(), SUM(), and AVG() in PostgreSQL?
+
+```ts
+// Basic syntax
+SELECT aggregate_function(column)
+FROM table_name
+WHERE condition;
+```
+
+Examples:
+
+```ts
+// Suppose we have a rangers table. Counts the total number of rangers.
+SELECT COUNT(*) AS total_rangers FROM rangers;
+
+// Suppose we have a table sales with a revenue column. Calculates total revenue.
+SELECT SUM(revenue) AS total_revenue FROM sales;
+
+// Calculates the average revenue.
+SELECT AVG(revenue) AS average_revenue FROM sales;
+```
