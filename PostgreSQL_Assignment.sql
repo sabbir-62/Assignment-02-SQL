@@ -7,11 +7,11 @@ CREATE TABLE rangers (
 );
 
 -- insert sample data to ranger table
-INSERT INTO rangers (ranger_id, name, region)
+INSERT INTO rangers (name, region)
 VALUES
-    (1, 'Alice Green', 'Northern Hills'),
-    (2, 'Bob White', 'River Delta'),
-    (3, 'Carol King', 'Mountain Range');
+    ('Alice Green', 'Northern Hills'),
+    ('Bob White', 'River Delta'),
+    ('Carol King', 'Mountain Range');
 
 
 -- specis table creation
@@ -24,12 +24,12 @@ CREATE TABLE species (
 );
 
 -- insert sample data to species table
-INSERT INTO species (species_id, common_name, scientific_name, discovery_date, conservation_status)
+INSERT INTO species (common_name, scientific_name, discovery_date, conservation_status)
 VALUES
-    (1, 'Snow Leopard', 'Panthera uncia', '1775-01-01', 'Endangered'),
-    (2, 'Bengal Tiger', 'Panthera tigris tigris', '1758-01-01', 'Endangered'),
-    (3, 'Red Panda', 'Ailurus fulgens', '1825-01-01', 'Vulnerable'),
-    (4, 'Asiatic Elephant', 'Elephas maximus indicus', '1758-01-01', 'Endangered');
+    ('Snow Leopard', 'Panthera uncia', '1775-01-01', 'Endangered'),
+    ('Bengal Tiger', 'Panthera tigris tigris', '1758-01-01', 'Endangered'),
+    ('Red Panda', 'Ailurus fulgens', '1825-01-01', 'Vulnerable'),
+    ('Asiatic Elephant', 'Elephas maximus indicus', '1758-01-01', 'Endangered');
 
 
 -- sightings table creation
@@ -45,12 +45,12 @@ CREATE TABLE sightings (
 );
 
 -- insert sample data to sightings table
-INSERT INTO sightings (sighting_id, species_id, ranger_id, location, sighting_time, notes)
+INSERT INTO sightings (species_id, ranger_id, location, sighting_time, notes)
 VALUES
-    (1, 1, 1, 'Peak Ridge', '2024-05-10 07:45:00', 'Camera trap image captured'),
-    (2, 2, 2, 'Bankwood Area', '2024-05-12 16:20:00', 'Juvenile seen'),
-    (3, 3, 3, 'Bamboo Grove East', '2024-05-15 09:10:00', 'Feeding observed'),
-    (4, 1, 2, 'Snowfall Pass', '2024-05-18 18:30:00', NULL);
+    (1, 1, 'Peak Ridge', '2024-05-10 07:45:00', 'Camera trap image captured'),
+    (2, 2, 'Bankwood Area', '2024-05-12 16:20:00', 'Juvenile seen'),
+    (3, 3, 'Bamboo Grove East', '2024-05-15 09:10:00', 'Feeding observed'),
+    (1, 2, 'Snowfall Pass', '2024-05-18 18:30:00', NULL);
 
 
 -- Problem 1
@@ -84,9 +84,18 @@ WHERE si.sighting_id IS NULL;
 
 
 -- problem 6
-SELECT *
-FROM sightings
-ORDER BY sighting_time DESC
+SELECT 
+    sp.common_name,
+    s.sighting_time,
+    r.name
+FROM 
+    sightings s
+JOIN 
+    species sp ON s.species_id = sp.species_id
+JOIN 
+    rangers r ON s.ranger_id = r.ranger_id
+ORDER BY 
+    s.sighting_time DESC
 LIMIT 2;
 
 
@@ -96,11 +105,9 @@ SET conservation_status = 'Historic'
 WHERE discovery_date < '1800-01-01';
 
 
-
 -- problem 8
 SELECT 
     sighting_id,
-    sighting_time,
     CASE
         WHEN EXTRACT(HOUR FROM sighting_time) BETWEEN 5 AND 11 THEN 'Morning'
         WHEN EXTRACT(HOUR FROM sighting_time) BETWEEN 12 AND 17 THEN 'Afternoon'
